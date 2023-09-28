@@ -15,4 +15,15 @@ Al click su una thumb, visualizzare in grande l’immagine corrispondente
 **Step by step:**
 1. get the array from last carousel
 2. get the layout and the css from last carousel
-
+3. use the previously made funtions as methods in order to keep all the things already made adaptable to vue
+4. using v-model to display the images
+5. use v-for and use the last layout as a template
+6. with the use of v-bind add the claas hide to the elements with index diferent than the actual index counter
+7. again with v-model fill the gaps in de template
+8. with v-model display the thumbnails
+9. add an event listener on thumbnail clicks that will change the image displayed (use the index)
+10. add an event listener click to top arrow and bottom arrow to change the images
+11. create an interval of time were the image change automaticaly each 3 second (same as the previous carrousel)
+12. add an event listener to the invert button in order to invert the display order of autoplay pictures 
+13. add an event listener when the mouse  enter into slider the autoplay will stop
+14. add an event listener, when the mouse leave the slider it will continue the autoplay
