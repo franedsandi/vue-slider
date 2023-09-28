@@ -1,5 +1,5 @@
-const {createApp} = Vue;
-createApp ({
+const { createApp } = Vue;
+const app = createApp({
   data() {
     return {
       counterImg: 0,
@@ -34,57 +34,31 @@ createApp ({
     };
   },
   methods: {
-    highlightActiveThumbnail() {
-      const thumbnails = this.smallpics.querySelectorAll('.smallpic');
-      thumbnails.forEach((thumbnail, index) => {
-        if (index === this.counterImg) {
-          thumbnail.classList.add('active');
-        } else {
-          thumbnail.classList.remove('active');
-        }
-      });
-    },
     showNextImage() {
-      const slides = this.itemsWrapper.querySelectorAll('.slide');
-      slides[this.counterImg].classList.add('hide');
-      this.counterImg = (this.counterImg + 1) % slides.length;
-      slides[this.counterImg].classList.remove('hide');
-      slides[this.counterImg].querySelector('.text').classList.remove('hide');
-      this.highlightActiveThumbnail();
+      this.counterImg = (this.counterImg + 1) % this.images.length;
     },
     showPreviousImage() {
-      const slides = this.itemsWrapper.querySelectorAll('.slide');
-      slides[this.counterImg].classList.add('hide');
-      this.counterImg = (this.counterImg - 1 + slides.length) % slides.length;
-      slides[this.counterImg].classList.remove('hide');
-      slides[this.counterImg].querySelector('.text').classList.remove('hide');
-      this.highlightActiveThumbnail();
+      this.counterImg = (this.counterImg - 1 + this.images.length) % this.images.length;
     },
     toggleOrder() {
       this.invertOrder = !this.invertOrder;
     },
     autoShowNextImage() {
+      console.log('autoShowNextImage() called');
       setInterval(() => {
         if (this.invertOrder) {
           this.showPreviousImage();
+          console.log('showPreviousImage() called');
         } else {
           this.showNextImage();
+          console.log('showNextImage() called');
         }
       }, 5000);
     },
     handleThumbnailClick(index) {
-      this.displayImage(index);
-    },
-    displayImage(index) {
-      const slides = this.$refs.itemsWrapper.querySelectorAll('.slide');
-      slides[this.counterImg].classList.add('hide');
       this.counterImg = index;
-      slides[this.counterImg].classList.remove('hide');
-      slides[this.counterImg].querySelector('.text').classList.remove('hide');
-      this.highlightActiveThumbnail();
     },
   },
-  mounted() {
-    this.autoShowNextImage();
-  },
-}).mount('#app')
+});
+
+app.mount('#app');
