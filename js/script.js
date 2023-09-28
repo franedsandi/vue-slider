@@ -43,13 +43,11 @@ const app = createApp({
     toggleOrder() {
       this.invertOrder = !this.invertOrder;
       if (this.invertOrder) {
-        // Reverse the direction for showing images
         this.showNextImage = this.showPreviousImage;
         this.showPreviousImage = () => {
           this.counterImg = (this.counterImg + 1) % this.images.length;
         };
       } else {
-        // Restore the original direction for showing images
         this.showPreviousImage = () => {
           this.counterImg = (this.counterImg - 1 + this.images.length) % this.images.length;
         };
@@ -61,12 +59,23 @@ const app = createApp({
     handleThumbnailClick(index) {
       this.counterImg = index;
     },
+    pauseInterval() {
+      clearInterval(this.intervalId);
+    },
+    resumeInterval() {
+      this.intervalId = setInterval(() => {
+        this.showNextImage();
+      }, 3000);
+    },
   },
   mounted() {
-    // Automatically change the image every 3 seconds
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.showNextImage();
     }, 3000);
+  
+    const slider = document.querySelector('.slider');
+    slider.addEventListener('mouseenter', () => this.pauseInterval());
+    slider.addEventListener('mouseleave', () => this.resumeInterval());
   },
 });
 
