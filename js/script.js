@@ -42,22 +42,31 @@ const app = createApp({
     },
     toggleOrder() {
       this.invertOrder = !this.invertOrder;
-    },
-    autoShowNextImage() {
-      console.log('autoShowNextImage() called');
-      setInterval(() => {
-        if (this.invertOrder) {
-          this.showPreviousImage();
-          console.log('showPreviousImage() called');
-        } else {
-          this.showNextImage();
-          console.log('showNextImage() called');
-        }
-      }, 5000);
+      if (this.invertOrder) {
+        // Reverse the direction for showing images
+        this.showNextImage = this.showPreviousImage;
+        this.showPreviousImage = () => {
+          this.counterImg = (this.counterImg + 1) % this.images.length;
+        };
+      } else {
+        // Restore the original direction for showing images
+        this.showPreviousImage = () => {
+          this.counterImg = (this.counterImg - 1 + this.images.length) % this.images.length;
+        };
+        this.showNextImage = () => {
+          this.counterImg = (this.counterImg + 1) % this.images.length;
+        };
+      }
     },
     handleThumbnailClick(index) {
       this.counterImg = index;
     },
+  },
+  mounted() {
+    // Automatically change the image every 3 seconds
+    setInterval(() => {
+      this.showNextImage();
+    }, 3000);
   },
 });
 
