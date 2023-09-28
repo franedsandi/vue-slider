@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- vue -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- fontawesole -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- custom css -->
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Carousel</title>
+</head>
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="container">
+        <div class="slider">
+          <div class="items-wrapper">
+            <div
+              class="slide"
+              v-for="(item, index) in images"
+              :key="index"
+              :class="{hide: index !== counterImg }"
+            >
+              <img :src="`./${item.image}`" :alt="item.title" />
+              <div class="text">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.text }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="items-thumbnail">
+            <div class="smallpics">
+              <div
+                class="smallpic"
+                v-for="(item, index) in images"
+                :key="index"
+                @click="handleThumbnailClick(index)"
+                :class="{ active: index === counterImg }"
+              >
+                <img :src="`./${item.image}`" :alt="item.title" />
+              </div>
+            </div>
+            <div class="btn-arrow top" @click="showPreviousImage">
+              <i class="fa-solid fa-angle-up"></i>
+            </div>
+            <div class="btn-arrow bottom" @click="showNextImage">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="invert-order" @click="toggleOrder">Invert Order</button>
+    </div>
+  </div>
+  
+  <script src="./js/script.js"></script>
+</body>
+</html>
